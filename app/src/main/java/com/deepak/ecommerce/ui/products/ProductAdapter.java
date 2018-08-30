@@ -1,25 +1,24 @@
 package com.deepak.ecommerce.ui.products;
 
 import android.content.Context;
-import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.deepak.ecommerce.R;
 import com.deepak.ecommerce.databinding.ProductListRowBinding;
 import com.deepak.ecommerce.models.ApiResponse;
-import com.deepak.ecommerce.utils.Constants;
+import com.deepak.ecommerce.ui.variants.VariantsAdapter;
 
 /**
  * To display list of search data
  * Created by deepak sachdeva on 14/08/17.
- *
+ * <p>
  * version 1.0
  */
 public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> implements View.OnClickListener {
@@ -27,10 +26,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> impl
     private ApiResponse apiResponse;
     private Context context;
     private LayoutInflater layoutInflater;
+    private int clickedPosition;
 
-    ProductAdapter(Context context, ApiResponse apiResponse) {
+    public ProductAdapter(Context context, ApiResponse apiResponse, int clickedPosition) {
         this.apiResponse = apiResponse;
         this.context = context;
+        this.clickedPosition = clickedPosition;
     }
 
     @NonNull
@@ -48,31 +49,29 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> impl
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         if (apiResponse != null) {
-            holder.productListRowBinding.setApiResponse(apiResponse);
-
-            for(int i = 0; i< apiResponse.getCategories().size(); i++){
-                holder.productListRowBinding.setCategory(apiResponse.getCategories().get(position));
+            for (int i = 0; i < apiResponse.getCategories().get(clickedPosition).getProducts().size(); i++) {
+                holder.productListRowBinding.setProduct(apiResponse.getCategories().get(clickedPosition).getProducts().get(position));
             }
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context,
+                    LinearLayoutManager.HORIZONTAL, false);
+            holder.productListRowBinding.rvVariants.setLayoutManager(mLayoutManager);
+            holder.productListRowBinding.rvVariants.setItemAnimator(new DefaultItemAnimator());
+
+            VariantsAdapter mAdapter = new VariantsAdapter(
+                    apiResponse.getCategories().get(clickedPosition).getProducts().get(position).getVariants());
+            holder.productListRowBinding.rvVariants.setAdapter(mAdapter);
 
             holder.productListRowBinding.linParent.setOnClickListener(this);
         }
     }
 
-    @BindingAdapter({Constants.MOVIE_POSTER})
-    public static void loadImage(ImageView view, String imageUrl) {
-        Glide.with(view.getContext())
-                .load(imageUrl)
-                .into(view);
-    }
-
     @Override
     public int getItemCount() {
-        return apiResponse.getCategories().size();
-
+        return apiResponse.getCategories().get(clickedPosition).getProducts().size();
     }
 
     @Override
     public void onClick(View view) {
-//        ((MainActivity)context).replaceFragment(ChooseOptionsFragment.newInstance(apiResponse,""));
+
     }
 }

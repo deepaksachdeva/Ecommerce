@@ -1,8 +1,8 @@
-package com.deepak.ecommerce.ui.products;
+package com.deepak.ecommerce.ui.ranking;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.deepak.ecommerce.databinding.CategoryListRowBinding;
+import com.deepak.ecommerce.databinding.MostViewedListRowBinding;
 import com.deepak.ecommerce.databinding.ProductListRowBinding;
 
 
@@ -13,11 +13,11 @@ import com.deepak.ecommerce.databinding.ProductListRowBinding;
  * version 1.0
  */
 
-public class ProductViewHolder extends RecyclerView.ViewHolder {
+public class MostViewedViewHolder extends RecyclerView.ViewHolder {
 
-    public ProductListRowBinding productListRowBinding;
+    public MostViewedListRowBinding productListRowBinding;
 
-    public ProductViewHolder(ProductListRowBinding productListRowBinding) {
+    public MostViewedViewHolder(MostViewedListRowBinding productListRowBinding) {
         super(productListRowBinding.getRoot());
         this.productListRowBinding = productListRowBinding;
     }

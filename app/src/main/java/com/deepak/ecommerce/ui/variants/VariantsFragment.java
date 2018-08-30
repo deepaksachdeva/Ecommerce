@@ -1,8 +1,9 @@
-package com.deepak.ecommerce.ui.products;
+package com.deepak.ecommerce.ui.variants;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -14,26 +15,33 @@ import android.view.ViewGroup;
 
 import com.deepak.ecommerce.R;
 import com.deepak.ecommerce.databinding.FragmentProductsBinding;
+import com.deepak.ecommerce.databinding.FragmentVariantsBinding;
 import com.deepak.ecommerce.models.ApiResponse;
+import com.deepak.ecommerce.models.Variant;
 import com.deepak.ecommerce.ui.main.MainActivity;
+import com.deepak.ecommerce.ui.products.ProductAdapter;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * to handle interaction events.
- * Use the {@link ProductsFragment#newInstance} factory method to
+ * Use the {@link VariantsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProductsFragment extends Fragment {
+public class VariantsFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private ApiResponse apiResponse;
+    private List<Variant>  listVariants;
     private int mParam2;
     private MainActivity activity;
-    private FragmentProductsBinding binding;
+    private FragmentVariantsBinding binding;
 
-    public ProductsFragment() {
+    public VariantsFragment() {
         // Required empty public constructor
     }
 
@@ -45,10 +53,10 @@ public class ProductsFragment extends Fragment {
      * @param param2      Parameter 2.
      * @return A new instance of fragment ProductsFragment.
      */
-    public static ProductsFragment newInstance(ApiResponse apiResponse, int param2) {
-        ProductsFragment fragment = new ProductsFragment();
+    public static VariantsFragment newInstance(List<Variant> apiResponse, int param2) {
+        VariantsFragment fragment = new VariantsFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_PARAM1, apiResponse);
+        args.putParcelableArrayList(ARG_PARAM1, (ArrayList<? extends Parcelable>) apiResponse);
         args.putInt(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
@@ -58,13 +66,13 @@ public class ProductsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            apiResponse = (ApiResponse) getArguments().getSerializable(ARG_PARAM1);
+            listVariants = getArguments().getParcelableArrayList(ARG_PARAM1);
             mParam2 = getArguments().getInt(ARG_PARAM2);
         }
     }
 
     private void setVisibility(int recycler, int textView, String txt) {
-        binding.rvProducts.setVisibility(recycler);
+        binding.rvVariants.setVisibility(recycler);
         binding.linSearchTxt.setVisibility(textView);
         binding.tvMessage.setText(txt);
     }
@@ -73,16 +81,16 @@ public class ProductsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_products, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_variants, container, false);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity);
-        binding.rvProducts.setLayoutManager(mLayoutManager);
-        binding.rvProducts.setItemAnimator(new DefaultItemAnimator());
+        binding.rvVariants.setLayoutManager(mLayoutManager);
+        binding.rvVariants.setItemAnimator(new DefaultItemAnimator());
 
-        if (apiResponse.getCategories().get(mParam2).getProducts().size() != 0) {
+        if (listVariants.size() != 0) {
             setVisibility(View.VISIBLE, View.GONE, "");
-            ProductAdapter mAdapter = new ProductAdapter(activity, apiResponse, mParam2);
-            binding.rvProducts.setAdapter(mAdapter);
+            VariantsAdapter mAdapter = new VariantsAdapter(listVariants);
+            binding.rvVariants.setAdapter(mAdapter);
         } else {
             setVisibility(View.GONE, View.GONE, getString(R.string.no_data_found));
         }

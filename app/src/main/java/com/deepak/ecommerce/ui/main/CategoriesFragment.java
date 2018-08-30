@@ -26,12 +26,6 @@ import com.deepak.ecommerce.utils.Constants;
  * create an instance of this fragment.
  */
 public class CategoriesFragment extends Fragment implements IResponseListener {
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
     private MainActivity activity;
     private FragmentCategoryBinding fragmentCategoryBinding;
 
@@ -43,26 +37,15 @@ public class CategoriesFragment extends Fragment implements IResponseListener {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment CategoriesFragment.
      */
-    public static CategoriesFragment newInstance(String param1, String param2) {
-        CategoriesFragment fragment = new CategoriesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static CategoriesFragment newInstance() {
+        return new CategoriesFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -94,20 +77,25 @@ public class CategoriesFragment extends Fragment implements IResponseListener {
         activity = null;
     }
 
-    private void setVisibility(int recycler, int textView, String txt) {
+    private void setVisibility(int recycler, int progress, int textView, String txt) {
         fragmentCategoryBinding.rvMovies.setVisibility(recycler);
+        fragmentCategoryBinding.linProgress.setVisibility(progress);
         fragmentCategoryBinding.linSearchTxt.setVisibility(textView);
         fragmentCategoryBinding.tvMessage.setText(txt);
     }
 
     @Override
     public void onResponse(ApiResponse apiResponse) {
-        if (apiResponse.getCategories() != null) {
-            setVisibility(View.VISIBLE, View.GONE, "");
-            CategoriesAdapter mAdapter = new CategoriesAdapter(activity, apiResponse);
-            fragmentCategoryBinding.rvMovies.setAdapter(mAdapter);
+        if (apiResponse != null) {
+            if (apiResponse.getCategories().size() != 0) {
+                setVisibility(View.VISIBLE, View.GONE, View.GONE, "");
+                CategoriesAdapter mAdapter = new CategoriesAdapter(activity, apiResponse);
+                fragmentCategoryBinding.rvMovies.setAdapter(mAdapter);
+            } else {
+                setVisibility(View.GONE, View.GONE, View.VISIBLE, getString(R.string.no_data_found));
+            }
         } else {
-            setVisibility(View.GONE, View.VISIBLE, "Some server Error");
+            setVisibility(View.GONE, View.GONE, View.VISIBLE, getString(R.string.server_error));
         }
     }
 

@@ -23,6 +23,58 @@ public class Product {
     @Expose
     private Tax tax;
 
+
+
+//    @SerializedName("view_count")
+//    @Expose
+//    private Integer viewCount;
+//
+//    @SerializedName("order_count")
+//    @Expose
+//    private Integer orderCount;
+//    @SerializedName("shares")
+//    @Expose
+//    private Integer shares;
+//
+//    private Integer count;
+
+
+//    public Integer getViewCount() {
+//        return viewCount;
+//    }
+//
+//    public void setViewCount(Integer viewCount) {
+//        this.viewCount = viewCount;
+//        setCount(viewCount);
+//    }
+
+
+//    public Integer getOrderCount() {
+//        return orderCount;
+//    }
+//
+//    public void setOrderCount(Integer orderCount) {
+//        this.orderCount = orderCount;
+//        setCount(orderCount);
+//    }
+//
+//    public Integer getShares() {
+//        return shares;
+//    }
+//
+//    public void setShares(Integer shares) {
+//        this.shares = shares;
+//        setCount(shares);
+//    }
+//
+//    public void setCount(Integer count){
+//        this.count = count;
+//    }
+//
+//    public Integer getCount() {
+//        return count;
+//    }
+
     public Integer getId() {
         return id;
     }

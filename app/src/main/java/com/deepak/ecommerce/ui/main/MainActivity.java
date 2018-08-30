@@ -21,23 +21,21 @@ import com.deepak.ecommerce.databinding.ActivityMainBinding;
  */
 
 public class MainActivity extends AppCompatActivity implements Runnable {
-    private ActivityMainBinding activityMainBinding;
     private Fragment fragment;
     private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
-        activityMainBinding = DataBindingUtil.setContentView(MainActivity.this,
-                R.layout.activity_main);
 
+        ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(MainActivity.this,
+                R.layout.activity_main);
         activityMainBinding.toolbar.setTitle(R.string.app_name);
         setSupportActionBar(activityMainBinding.toolbar);
 
         mHandler = new Handler();
         if (savedInstanceState == null) {
-            replaceFragment(CategoriesFragment.newInstance("",""));
+            replaceFragment(CategoriesFragment.newInstance());
         }
     }
 
