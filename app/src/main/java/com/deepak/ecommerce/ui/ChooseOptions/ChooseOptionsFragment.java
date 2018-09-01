@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.deepak.ecommerce.R;
 import com.deepak.ecommerce.databinding.FragmentChooseOptionsBinding;
@@ -163,6 +164,8 @@ public class ChooseOptionsFragment extends Fragment implements View.OnClickListe
         binding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_choose_options, container, false);
 
+        activity.setUpActionBar(getString(R.string.choose_option));
+
         binding.tv1.setText(apiResponse.getRankings().get(0).getRanking());
         binding.tv2.setText(apiResponse.getRankings().get(1).getRanking());
         binding.tv3.setText(apiResponse.getRankings().get(2).getRanking());
@@ -194,7 +197,7 @@ public class ChooseOptionsFragment extends Fragment implements View.OnClickListe
                 activity.replaceFragment(ProductsFragment.newInstance(apiResponse, mParam2));
                 break;
             case R.id.tv_for_kids:
-
+                Toast.makeText(activity, R.string.coming_soon, Toast.LENGTH_SHORT).show();
                 break;
         }
     }

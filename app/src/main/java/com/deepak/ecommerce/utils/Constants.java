@@ -11,6 +11,8 @@ public class Constants {
    public static final String BASE_URL = "https://stark-spire-93433.herokuapp.com";
    public static final String JSON = "json";
    public static final String BLANK = "";
+   public static final String NO_INTERNET_CONNECTION = "No Internet connection";
+   public static final String NO_DATA = "There is no Data";
    public static final String SLASH = "/";
    public static final String API_RESPONSE = "api_response";
 }

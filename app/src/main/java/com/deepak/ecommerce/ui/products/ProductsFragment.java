@@ -75,6 +75,7 @@ public class ProductsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_products, container, false);
+        activity.setUpActionBar(getString(R.string.products));
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity);
         binding.rvProducts.setLayoutManager(mLayoutManager);

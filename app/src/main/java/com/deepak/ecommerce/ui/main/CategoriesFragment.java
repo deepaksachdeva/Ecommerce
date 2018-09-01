@@ -58,16 +58,13 @@ public class CategoriesFragment extends Fragment implements IResponseListener {
         fragmentCategoryBinding =
                 DataBindingUtil.inflate(inflater, R.layout.fragment_category, container, false);
 
+        activity.setUpActionBar(getString(R.string.categories));
 
         if (NetworkUtils.isNetworkConnected(activity)) {
             NetworkController networkController = new NetworkController();
             networkController.getProducts(this);
-        }else{
-            String json = PreferenceUtils.getAppStringPreference(activity, Constants.API_RESPONSE, Constants.BLANK);
-            Gson gson = new Gson();
-            ApiResponse apiResponse = gson.fromJson(json, ApiResponse.class);
-            setDataInAdapter(apiResponse);
-            setVisibility(View.VISIBLE, View.GONE, View.GONE, Constants.BLANK);
+        } else {
+            displayOfflineData();
         }
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity);
@@ -75,6 +72,22 @@ public class CategoriesFragment extends Fragment implements IResponseListener {
         fragmentCategoryBinding.rvMovies.setItemAnimator(new DefaultItemAnimator());
 
         return fragmentCategoryBinding.getRoot();
+    }
+
+    private void displayOfflineData(){
+        String json = PreferenceUtils.getAppStringPreference(activity, Constants.API_RESPONSE, Constants.BLANK);
+        Gson gson = new Gson();
+        ApiResponse apiResponse = gson.fromJson(json, ApiResponse.class);
+        if (apiResponse != null) {
+            if (apiResponse.getCategories().size() != 0) {
+                setDataInAdapter(apiResponse);
+                setVisibility(View.VISIBLE, View.GONE, View.GONE, Constants.BLANK);
+            } else {
+                setVisibility(View.GONE, View.GONE, View.VISIBLE, Constants.NO_DATA);
+            }
+        } else {
+            setVisibility(View.GONE, View.GONE, View.VISIBLE, Constants.NO_INTERNET_CONNECTION);
+        }
     }
 
     @Override
@@ -96,7 +109,7 @@ public class CategoriesFragment extends Fragment implements IResponseListener {
         fragmentCategoryBinding.tvMessage.setText(txt);
     }
 
-    private void setDataInAdapter(ApiResponse apiResponse){
+    private void setDataInAdapter(ApiResponse apiResponse) {
         CategoriesAdapter mAdapter = new CategoriesAdapter(activity, apiResponse);
         fragmentCategoryBinding.rvMovies.setAdapter(mAdapter);
     }

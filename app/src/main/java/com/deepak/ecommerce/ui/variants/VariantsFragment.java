@@ -12,17 +12,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.deepak.ecommerce.R;
-import com.deepak.ecommerce.databinding.FragmentProductsBinding;
 import com.deepak.ecommerce.databinding.FragmentVariantsBinding;
-import com.deepak.ecommerce.models.ApiResponse;
 import com.deepak.ecommerce.models.Variant;
 import com.deepak.ecommerce.ui.main.MainActivity;
-import com.deepak.ecommerce.ui.products.ProductAdapter;
 import com.deepak.ecommerce.utils.Constants;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,6 +77,8 @@ public class VariantsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_variants, container, false);
+
+        activity.setUpActionBar(getString(R.string.list_of_products));
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity);
         binding.rvVariants.setLayoutManager(mLayoutManager);
