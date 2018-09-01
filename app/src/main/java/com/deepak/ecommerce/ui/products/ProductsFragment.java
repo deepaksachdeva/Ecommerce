@@ -16,6 +16,7 @@ import com.deepak.ecommerce.R;
 import com.deepak.ecommerce.databinding.FragmentProductsBinding;
 import com.deepak.ecommerce.models.ApiResponse;
 import com.deepak.ecommerce.ui.main.MainActivity;
+import com.deepak.ecommerce.utils.Constants;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -80,7 +81,7 @@ public class ProductsFragment extends Fragment {
         binding.rvProducts.setItemAnimator(new DefaultItemAnimator());
 
         if (apiResponse.getCategories().get(mParam2).getProducts().size() != 0) {
-            setVisibility(View.VISIBLE, View.GONE, "");
+            setVisibility(View.VISIBLE, View.GONE, Constants.BLANK);
             ProductAdapter mAdapter = new ProductAdapter(activity, apiResponse, mParam2);
             binding.rvProducts.setAdapter(mAdapter);
         } else {

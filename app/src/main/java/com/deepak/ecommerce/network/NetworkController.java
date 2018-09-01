@@ -9,7 +9,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class NetworkController {
-    public void getProducts(IResponseListener iResponseListener, String searchText, String apiKey) {
+    public void getProducts(IResponseListener iResponseListener) {
         EcommerceApp.getRetrofitAPI().getProducts().enqueue(new Callback<ApiResponse>() {
             @ParametersAreNonnullByDefault
             @Override

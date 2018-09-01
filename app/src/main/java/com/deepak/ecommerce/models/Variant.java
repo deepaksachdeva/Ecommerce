@@ -23,7 +23,7 @@ public class Variant implements Parcelable{
     @Expose
     private Integer price;
 
-    protected Variant(Parcel in) {
+    private Variant(Parcel in) {
         if (in.readByte() == 0) {
             id = null;
         } else {

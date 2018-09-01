@@ -17,7 +17,7 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
 
     public ProductListRowBinding productListRowBinding;
 
-    public ProductViewHolder(ProductListRowBinding productListRowBinding) {
+    ProductViewHolder(ProductListRowBinding productListRowBinding) {
         super(productListRowBinding.getRoot());
         this.productListRowBinding = productListRowBinding;
     }

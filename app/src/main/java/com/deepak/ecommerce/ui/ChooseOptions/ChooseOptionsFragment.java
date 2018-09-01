@@ -38,7 +38,7 @@ public class ChooseOptionsFragment extends Fragment implements View.OnClickListe
     private ApiResponse apiResponse;
     private int mParam2;
     private MainActivity activity;
-    FragmentChooseOptionsBinding binding;
+    private FragmentChooseOptionsBinding binding;
 
     public ChooseOptionsFragment() {
         // Required empty public constructor
@@ -70,7 +70,7 @@ public class ChooseOptionsFragment extends Fragment implements View.OnClickListe
         }
     }
 
-    private void ranking1Products(){
+    private void ranking1Products() {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity
                 , LinearLayoutManager.HORIZONTAL, false);
         binding.rvMostViewed.setLayoutManager(mLayoutManager);
@@ -92,19 +92,14 @@ public class ChooseOptionsFragment extends Fragment implements View.OnClickListe
             }
         }
 
-        Log.i("Size: ", "" + listViewedProducts.size());
-
         if (listViewedProducts.size() != 0) {
-            // setVisibility(View.VISIBLE, View.GONE, "");
             MostViewedAdapter mAdapter = new MostViewedAdapter(activity, listViewedProducts,
                     apiResponse.getRankings().get(0).getProducts(), 1);
             binding.rvMostViewed.setAdapter(mAdapter);
-        } else {
-            //setVisibility(View.GONE, View.GONE, getString(R.string.no_data_found));
         }
     }
 
-    private void ranking2Products(){
+    private void ranking2Products() {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity
                 , LinearLayoutManager.HORIZONTAL, false);
         binding.rvMostOrdered.setLayoutManager(mLayoutManager);
@@ -126,19 +121,14 @@ public class ChooseOptionsFragment extends Fragment implements View.OnClickListe
             }
         }
 
-        Log.i("Ordered Size: ", "" + listOrderedProducts.size());
-
         if (listOrderedProducts.size() != 0) {
-            // setVisibility(View.VISIBLE, View.GONE, "");
             MostViewedAdapter mAdapter = new MostViewedAdapter(activity, listOrderedProducts,
                     apiResponse.getRankings().get(1).getProducts(), 2);
             binding.rvMostOrdered.setAdapter(mAdapter);
-        } else {
-            //setVisibility(View.GONE, View.GONE, getString(R.string.no_data_found));
         }
     }
 
-    private void ranking3Products(){
+    private void ranking3Products() {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity
                 , LinearLayoutManager.HORIZONTAL, false);
         binding.rvMostShared.setLayoutManager(mLayoutManager);
@@ -159,17 +149,11 @@ public class ChooseOptionsFragment extends Fragment implements View.OnClickListe
             }
         }
 
-        Log.i("Shared Size: ", "" + listSharedProducts.size());
-
         if (listSharedProducts.size() != 0) {
-            // setVisibility(View.VISIBLE, View.GONE, "");
             MostViewedAdapter mAdapter = new MostViewedAdapter(activity, listSharedProducts,
                     apiResponse.getRankings().get(2).getProducts(), 3);
             binding.rvMostShared.setAdapter(mAdapter);
-        } else {
-            //setVisibility(View.GONE, View.GONE, getString(R.string.no_data_found));
         }
-
     }
 
     @Override

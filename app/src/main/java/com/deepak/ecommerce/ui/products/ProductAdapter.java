@@ -28,7 +28,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> impl
     private LayoutInflater layoutInflater;
     private int clickedPosition;
 
-    public ProductAdapter(Context context, ApiResponse apiResponse, int clickedPosition) {
+    ProductAdapter(Context context, ApiResponse apiResponse, int clickedPosition) {
         this.apiResponse = apiResponse;
         this.context = context;
         this.clickedPosition = clickedPosition;

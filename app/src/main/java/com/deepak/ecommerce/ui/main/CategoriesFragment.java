@@ -18,6 +18,9 @@ import com.deepak.ecommerce.listeners.IResponseListener;
 import com.deepak.ecommerce.models.ApiResponse;
 import com.deepak.ecommerce.network.NetworkController;
 import com.deepak.ecommerce.utils.Constants;
+import com.deepak.ecommerce.utils.NetworkUtils;
+import com.deepak.ecommerce.utils.PreferenceUtils;
+import com.google.gson.Gson;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,8 +58,17 @@ public class CategoriesFragment extends Fragment implements IResponseListener {
         fragmentCategoryBinding =
                 DataBindingUtil.inflate(inflater, R.layout.fragment_category, container, false);
 
-        NetworkController networkController = new NetworkController();
-        networkController.getProducts(this, "", Constants.API_KEY);
+
+        if (NetworkUtils.isNetworkConnected(activity)) {
+            NetworkController networkController = new NetworkController();
+            networkController.getProducts(this);
+        }else{
+            String json = PreferenceUtils.getAppStringPreference(activity, Constants.API_RESPONSE, Constants.BLANK);
+            Gson gson = new Gson();
+            ApiResponse apiResponse = gson.fromJson(json, ApiResponse.class);
+            setDataInAdapter(apiResponse);
+            setVisibility(View.VISIBLE, View.GONE, View.GONE, Constants.BLANK);
+        }
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity);
         fragmentCategoryBinding.rvMovies.setLayoutManager(mLayoutManager);
@@ -84,13 +96,20 @@ public class CategoriesFragment extends Fragment implements IResponseListener {
         fragmentCategoryBinding.tvMessage.setText(txt);
     }
 
+    private void setDataInAdapter(ApiResponse apiResponse){
+        CategoriesAdapter mAdapter = new CategoriesAdapter(activity, apiResponse);
+        fragmentCategoryBinding.rvMovies.setAdapter(mAdapter);
+    }
+
     @Override
     public void onResponse(ApiResponse apiResponse) {
         if (apiResponse != null) {
             if (apiResponse.getCategories().size() != 0) {
-                setVisibility(View.VISIBLE, View.GONE, View.GONE, "");
-                CategoriesAdapter mAdapter = new CategoriesAdapter(activity, apiResponse);
-                fragmentCategoryBinding.rvMovies.setAdapter(mAdapter);
+                Gson gson = new Gson();
+                String json = gson.toJson(apiResponse);
+                PreferenceUtils.setAppPreference(activity, Constants.API_RESPONSE, json);
+                setVisibility(View.VISIBLE, View.GONE, View.GONE, Constants.BLANK);
+                setDataInAdapter(apiResponse);
             } else {
                 setVisibility(View.GONE, View.GONE, View.VISIBLE, getString(R.string.no_data_found));
             }

@@ -20,6 +20,7 @@ import com.deepak.ecommerce.models.ApiResponse;
 import com.deepak.ecommerce.models.Variant;
 import com.deepak.ecommerce.ui.main.MainActivity;
 import com.deepak.ecommerce.ui.products.ProductAdapter;
+import com.deepak.ecommerce.utils.Constants;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -88,7 +89,7 @@ public class VariantsFragment extends Fragment {
         binding.rvVariants.setItemAnimator(new DefaultItemAnimator());
 
         if (listVariants.size() != 0) {
-            setVisibility(View.VISIBLE, View.GONE, "");
+            setVisibility(View.VISIBLE, View.GONE, Constants.BLANK);
             VariantsAdapter mAdapter = new VariantsAdapter(listVariants);
             binding.rvVariants.setAdapter(mAdapter);
         } else {

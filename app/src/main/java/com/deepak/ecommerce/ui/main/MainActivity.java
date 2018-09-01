@@ -39,14 +39,14 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        MenuInflater inflater = getMenuInflater();
-        // Inflate menu to add items to action bar if it is present.
-        inflater.inflate(R.menu.menu_main, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        MenuInflater inflater = getMenuInflater();
+//        // Inflate menu to add items to action bar if it is present.
+//        inflater.inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
 
     public void replaceFragment(Fragment fragment) {
         this.fragment = fragment;

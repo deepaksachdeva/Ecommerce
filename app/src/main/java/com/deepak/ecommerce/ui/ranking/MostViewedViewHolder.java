@@ -17,7 +17,7 @@ public class MostViewedViewHolder extends RecyclerView.ViewHolder {
 
     public MostViewedListRowBinding productListRowBinding;
 
-    public MostViewedViewHolder(MostViewedListRowBinding productListRowBinding) {
+    MostViewedViewHolder(MostViewedListRowBinding productListRowBinding) {
         super(productListRowBinding.getRoot());
         this.productListRowBinding = productListRowBinding;
     }
